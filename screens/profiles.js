@@ -95,6 +95,7 @@ function buildProfilesHTML() {
 }
 
 export function initProfiles(onLogin) {
+  initProfiles._onLogin = onLogin;
   // Profile tap
   document.querySelectorAll('.profile-card[data-id]').forEach(card => {
     card.addEventListener('click', () => openPinSheet(card.dataset.id, onLogin));
@@ -218,20 +219,10 @@ async function saveNewProfile() {
   const pinHash = await sha256(newPinBuffer);
 
   await saveUser(id, { name, emoji: selectedEmoji, pinHash, startDate: '' });
-  closeNewProfileSheet();
-
-  // Reload profiles
   users = await getAllUsers();
-  const container = document.getElementById('app');
-  const html = await buildProfilesHTML();
-  // Re-render the profile section only
-  const grid = document.querySelector('.profiles-grid');
-  if (grid) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    grid.replaceWith(tmp.querySelector('.profiles-grid'));
-    initProfiles(initProfiles._onLogin);
-  }
+  closeNewProfileSheet();
+  sessionStorage.setItem('current_user', id);
+  initProfiles._onLogin(id);
 }
 
 function buildEmojiGrid() {
