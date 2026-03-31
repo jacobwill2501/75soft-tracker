@@ -5,10 +5,10 @@
 // ============================================================
 
 export const FIREBASE_CONFIG = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyB357QpFTWmrOWX5S1C_nbfHjUqmts7hUQ",
+  authDomain:        "soft-tracker-4d937.firebaseapp.com",
+  projectId:         "soft-tracker-4d937",
+  storageBucket:     "soft-tracker-4d937.firebasestorage.app",
+  messagingSenderId: "2560443554",
+  appId:             "1:2560443554:web:d29485fea9429f94b743fb"
 };
