@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FAFAF8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="75 Soft" />
+  <meta name="description" content="Track your 75 Soft Challenge progress" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+
+  <link rel="stylesheet" href="style.css" />
+  <title>75 Soft</title>
+</head>
+<body>
+
+  <!-- App root -->
+  <div id="app"></div>
+
+  <!-- Bottom navigation (hidden until logged in) -->
+  <nav class="bottom-nav" id="bottom-nav" style="display:none;">
+    <button class="nav-tab active" data-tab="today">
+      <div class="nav-tab__icon">☀️</div>
+      <span class="nav-tab__label">Today</span>
+    </button>
+    <button class="nav-tab" data-tab="calendar">
+      <div class="nav-tab__icon">📅</div>
+      <span class="nav-tab__label">Calendar</span>
+    </button>
+    <button class="nav-tab" data-tab="settings">
+      <div class="nav-tab__icon">⚙️</div>
+      <span class="nav-tab__label">Settings</span>
+    </button>
+  </nav>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

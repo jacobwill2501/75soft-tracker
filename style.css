@@ -1,0 +1,881 @@
+/* ============================================================
+   75 Soft Tracker — Design System
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg: #FAFAF8;
+  --surface: #FFFFFF;
+  --sage: #A8C5A0;
+  --sage-light: #D4EDD0;
+  --lavender: #D4B8E0;
+  --lavender-light: #EDE0F7;
+  --amber: #F2C97D;
+  --amber-light: #FDF0D5;
+  --text-primary: #2D2D2D;
+  --text-secondary: #8A8A8A;
+  --text-light: #B8B8B8;
+  --border: #F0F0EE;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-full: 9999px;
+  --nav-height: 80px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+h3 { font-size: 1.125rem; font-weight: 600; }
+p  { font-size: 0.9375rem; color: var(--text-secondary); }
+
+.text-sm  { font-size: 0.8125rem; }
+.text-xs  { font-size: 0.75rem; }
+.text-muted { color: var(--text-secondary); }
+
+/* ============================================================
+   Layout
+   ============================================================ */
+
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom));
+}
+
+.screen.active {
+  display: flex;
+}
+
+.screen--fullpage {
+  padding-bottom: 0;
+}
+
+.page-content {
+  flex: 1;
+  padding: 0 20px;
+  padding-top: 16px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Top Bar
+   ============================================================ */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 8px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.top-bar__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.top-bar__action {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: transform 0.15s ease;
+}
+
+.top-bar__action:active { transform: scale(0.93); }
+
+/* ============================================================
+   Bottom Navigation
+   ============================================================ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 10px;
+  z-index: 100;
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px 0;
+  border: none;
+  background: none;
+  color: var(--text-light);
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.nav-tab.active { color: var(--text-primary); }
+
+.nav-tab__icon {
+  width: 48px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: background 0.2s ease;
+}
+
+.nav-tab.active .nav-tab__icon {
+  background: var(--lavender-light);
+}
+
+.nav-tab__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+
+.card--subtle {
+  background: var(--bg);
+  box-shadow: none;
+  border: 1.5px solid var(--border);
+}
+
+/* ============================================================
+   Task Cards (Checklist Items)
+   ============================================================ */
+
+.task-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.task-card:active { transform: scale(0.98); }
+
+.task-card.done {
+  background: var(--sage-light);
+  border-color: var(--sage);
+}
+
+.task-card__icon {
+  font-size: 1.75rem;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.task-card.done .task-card__icon { background: rgba(255,255,255,0.6); }
+
+.task-card__body { flex: 1; }
+
+.task-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.task-card__sub {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.task-card.done .task-card__sub { color: #6B9E62; }
+
+.task-card__check {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: var(--surface);
+}
+
+.task-card.done .task-card__check {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: white;
+}
+
+/* ============================================================
+   Progress Bar
+   ============================================================ */
+
+.progress-section {
+  padding: 12px 20px 0;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.progress-day {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.progress-pct {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--lavender);
+}
+
+.progress-track {
+  height: 8px;
+  background: var(--lavender-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lavender), var(--sage));
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   Photo Reminder Banner
+   ============================================================ */
+
+.photo-banner {
+  background: linear-gradient(135deg, var(--lavender-light), var(--sage-light));
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  border: 1.5px solid var(--lavender);
+}
+
+.photo-banner__icon { font-size: 1.75rem; }
+
+.photo-banner__body { flex: 1; }
+
+.photo-banner__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.photo-banner__sub {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.photo-banner__close {
+  background: none;
+  border: none;
+  font-size: 1.125rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 4px;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--sage);
+  color: white;
+  box-shadow: 0 4px 16px rgba(168, 197, 160, 0.4);
+}
+
+.btn-primary:hover { background: #96B88E; }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 10px 20px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+
+.input-group { margin-bottom: 16px; }
+
+.input-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.input:focus { border-color: var(--lavender); }
+
+/* ============================================================
+   PIN Input
+   ============================================================ */
+
+.pin-display {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.pin-dot.filled {
+  background: var(--lavender);
+  border-color: var(--lavender);
+}
+
+.pin-dot.error {
+  background: #F2A0A0;
+  border-color: #E07070;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.numpad-key {
+  aspect-ratio: 1;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  font-family: inherit;
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  -webkit-user-select: none;
+}
+
+.numpad-key:active {
+  transform: scale(0.92);
+  background: var(--lavender-light);
+}
+
+.numpad-key.delete { font-size: 1.125rem; }
+.numpad-key.empty  { background: transparent; box-shadow: none; cursor: default; }
+
+/* ============================================================
+   Profile Cards
+   ============================================================ */
+
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.profile-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.profile-card:active { transform: scale(0.97); }
+.profile-card.selected { border-color: var(--lavender); background: var(--lavender-light); }
+
+.profile-card__emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.profile-card__name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.profile-card__day {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.profile-card--add {
+  border: 2px dashed var(--border);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-light);
+}
+
+.profile-card--add .profile-card__emoji { font-size: 1.75rem; opacity: 0.5; }
+
+/* ============================================================
+   Calendar Grid
+   ============================================================ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--border);
+  color: var(--text-light);
+  transition: transform 0.15s ease;
+  border: 2px solid transparent;
+}
+
+.cal-cell:active { transform: scale(0.9); }
+
+.cal-cell.done       { background: var(--sage-light); color: #5A8F52; border-color: var(--sage); }
+.cal-cell.partial    { background: var(--amber-light); color: #B8860B; border-color: var(--amber); }
+.cal-cell.today      { border-color: var(--lavender); color: var(--text-primary); }
+.cal-cell.future     { opacity: 0.35; cursor: default; }
+
+/* ============================================================
+   Bottom Sheet
+   ============================================================ */
+
+.sheet-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 200;
+  backdrop-filter: blur(2px);
+}
+
+.sheet-overlay.open { display: block; }
+
+.sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 12px 24px 40px;
+  z-index: 201;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 75dvh;
+  overflow-y: auto;
+}
+
+.sheet.open { transform: translateY(0); }
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  margin: 0 auto 20px;
+}
+
+.sheet-day-header {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.sheet-day-sub {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.sheet-task-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sheet-task-row:last-child { border-bottom: none; }
+
+.sheet-task-icon { font-size: 1.375rem; }
+
+.sheet-task-name {
+  flex: 1;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.sheet-task-status {
+  font-size: 1.125rem;
+}
+
+/* ============================================================
+   Gate Screen
+   ============================================================ */
+
+.gate-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.gate-logo {
+  font-size: 4rem;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+}
+
+.gate-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.gate-sub {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.gate-form {
+  width: 100%;
+  max-width: 340px;
+}
+
+.gate-error {
+  color: #D14343;
+  font-size: 0.875rem;
+  margin-top: 10px;
+  min-height: 20px;
+}
+
+/* ============================================================
+   Start Date Prompt
+   ============================================================ */
+
+.start-date-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+/* ============================================================
+   Settings
+   ============================================================ */
+
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.settings-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.settings-row {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.settings-row:active { opacity: 0.7; }
+
+.settings-row__label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.settings-row__value {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-row--danger .settings-row__label { color: #D14343; }
+
+/* ============================================================
+   Emoji Picker (for profile setup)
+   ============================================================ */
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.emoji-option {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 1.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.emoji-option:active { transform: scale(0.9); }
+.emoji-option.selected { border-color: var(--lavender); background: var(--lavender-light); }
+
+/* ============================================================
+   Today Header
+   ============================================================ */
+
+.today-header {
+  padding: 16px 20px 0;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.today-greeting {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.today-headline {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.today-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.spacer { flex: 1; }
+.divider { height: 1px; background: var(--border); margin: 8px 0; }
+.mt-4  { margin-top: 16px; }
+.mt-6  { margin-top: 24px; }
+.mt-8  { margin-top: 32px; }
+.mb-2  { margin-bottom: 8px; }
+.mb-4  { margin-bottom: 16px; }
+.center { text-align: center; }
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+.animate-in:nth-child(1) { animation-delay: 0.05s; }
+.animate-in:nth-child(2) { animation-delay: 0.10s; }
+.animate-in:nth-child(3) { animation-delay: 0.15s; }
+.animate-in:nth-child(4) { animation-delay: 0.20s; }
+.animate-in:nth-child(5) { animation-delay: 0.25s; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (min-width: 480px) {
+  .bottom-nav { max-width: 480px; left: 50%; transform: translateX(-50%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .sheet { max-width: 480px; left: 50%; transform: translateX(-50%) translateY(100%); border-radius: var(--radius-lg); }
+  .sheet.open { transform: translateX(-50%) translateY(0); }
+}
