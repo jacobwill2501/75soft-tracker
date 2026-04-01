@@ -6,6 +6,7 @@ const TASKS = [
   { key: 'water',    icon: '💧', title: 'Water',    sub: 'Drink 3 liters today' },
   { key: 'reading',  icon: '📖', title: 'Read',     sub: '10 pages of anything' },
   { key: 'diet',     icon: '🥗', title: 'Eat Well', sub: 'Balanced meals, max 3 drinks' },
+  { key: 'sleep',   icon: '😴', title: 'Sleep',    sub: '8 hours of quality sleep' },
 ];
 
 const PHOTO_DAYS = [1, 45, 75];

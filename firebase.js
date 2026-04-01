@@ -37,7 +37,7 @@ export async function saveUser(userId, data) {
 // ── Days ──────────────────────────────────────────────────────
 export async function getDay(userId, dateStr) {
   const snap = await getDoc(doc(db, 'users', userId, 'days', dateStr));
-  return snap.exists() ? snap.data() : { exercise: false, water: false, reading: false, diet: false };
+  return snap.exists() ? snap.data() : { exercise: false, water: false, reading: false, diet: false, sleep: false };
 }
 
 export async function saveDay(userId, dateStr, data) {

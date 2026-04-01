@@ -49,7 +49,7 @@ function buildHTML() {
       cls += ' future';
     } else if (data) {
       const done = Object.values(data).filter(Boolean).length;
-      if (done === 4) cls += ' done';
+      if (done === 5) cls += ' done';
       else if (done > 0) cls += ' partial';
     }
     if (isToday) cls += ' today';
