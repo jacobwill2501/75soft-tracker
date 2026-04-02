@@ -40,7 +40,7 @@ An individual or family doing the 75 Soft challenge who wants a simple, privacy-
 
 ## 3. The 75 Soft Challenge Rules (Domain Context)
 
-Each day for 75 days, users must complete all four tasks:
+Each day for 75 days, users must complete all five tasks:
 
 | Task | Requirement |
 |---|---|
@@ -48,8 +48,9 @@ Each day for 75 days, users must complete all four tasks:
 | 💧 Water | Drink 3 liters of water |
 | 📖 Read | Read 10 pages of anything |
 | 🥗 Eat Well | Balanced meals, maximum 3 alcoholic drinks |
+| 😴 Sleep | 8 hours of quality sleep *(app-level addition — not part of official 75 Soft rules)* |
 
-A day is "complete" when all 4 tasks are checked. There is no "restart on failure" mechanic in the current app.
+A day is "complete" when all 5 tasks are checked. There is no "restart on failure" mechanic in the current app.
 
 ---
 
@@ -107,7 +108,7 @@ A day is "complete" when all 4 tasks are checked. There is no "restart on failur
 - **Header:** Personalized greeting + user emoji + "Day X of 75" + current date
 - **Progress Bar:** Visual fill showing `(dayNum - 1) / 75 * 100%`
 - **Photo Reminder Banner:** Appears on days 1, 45, and 75 with a reminder to take progress photos; dismissible per session
-- **4 Task Cards:** One per task (Exercise, Water, Read, Eat Well)
+- **5 Task Cards:** One per task (Exercise, Water, Read, Eat Well, Sleep)
   - Click/tap to toggle completion
   - Completed state: green card background + filled checkmark
   - Incomplete state: default card + empty circle
@@ -128,8 +129,8 @@ A day is "complete" when all 4 tasks are checked. There is no "restart on failur
 
 | Color | Meaning |
 |---|---|
-| Sage green | All 4 tasks completed |
-| Amber | 1–3 tasks completed (partial) |
+| Sage green | All 5 tasks completed |
+| Amber | 1–4 tasks completed (partial) |
 | Gray | 0 tasks completed (missed day) |
 | Faded/muted | Future day (not yet reachable) |
 | Lavender border | Today |
@@ -139,8 +140,9 @@ A day is "complete" when all 4 tasks are checked. There is no "restart on failur
 
 **Day Detail Sheet**
 - Tapping a past or current day opens a bottom sheet
-- Shows: Day number, full date, count ("3/4 tasks"), and individual task status (✅ or ⬜)
-- Dismissible by swiping down or tapping the overlay
+- Shows: Day number, full date, count ("X/5 tasks"), and individual task status (✅ or ⬜)
+- Task rows are **interactive** — tapping a row toggles its completion state, saves to Firebase immediately, and re-colors the calendar cell live
+- Dismissible by tapping the overlay
 
 ---
 
@@ -196,6 +198,7 @@ users/
         water: boolean
         reading: boolean
         diet: boolean
+        sleep: boolean
 ```
 
 ### Session Storage (Browser, Tab-Scoped)

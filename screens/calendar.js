@@ -1,4 +1,4 @@
-import { getAllDays, getDay, getUser } from '../firebase.js';
+import { getAllDays, getDay, getUser, saveDay } from '../firebase.js';
 import { todayStr, dateForDay, getDayNumber, formatDateLabel } from '../utils/dates.js';
 
 const TASKS = [
@@ -6,11 +6,14 @@ const TASKS = [
   { key: 'water',    icon: '💧', name: 'Water' },
   { key: 'reading',  icon: '📖', name: 'Read' },
   { key: 'diet',     icon: '🥗', name: 'Eat Well' },
+  { key: 'sleep',    icon: '😴', name: 'Sleep' },
 ];
 
 let currentUserId = null;
 let currentUser   = null;
 let allDays       = {};
+let sheetData     = {};
+let sheetDateStr  = null;
 
 export async function renderCalendar(userId) {
   currentUserId = userId;
@@ -103,27 +106,54 @@ export function initCalendar() {
 }
 
 async function openDaySheet(dayNum, dateStr) {
-  const data = allDays[dateStr] || { exercise: false, water: false, reading: false, diet: false };
-  const doneCount = Object.values(data).filter(Boolean).length;
+  const data = allDays[dateStr] || { exercise: false, water: false, reading: false, diet: false, sleep: false };
+  sheetData    = { ...data };
+  sheetDateStr = dateStr;
+  const doneCount = Object.values(sheetData).filter(Boolean).length;
 
   const rows = TASKS.map(t => `
-    <div class="sheet-task-row">
+    <div class="sheet-task-row" data-task="${t.key}" role="button" tabindex="0" style="cursor:pointer;">
       <span class="sheet-task-icon">${t.icon}</span>
       <span class="sheet-task-name">${t.name}</span>
-      <span class="sheet-task-status">${data[t.key] ? '✅' : '⬜'}</span>
+      <span class="sheet-task-status">${sheetData[t.key] ? '✅' : '⬜'}</span>
     </div>
   `).join('');
 
   document.getElementById('cal-sheet-content').innerHTML = `
     <div class="sheet-day-header">Day ${dayNum}</div>
-    <div class="sheet-day-sub">${formatDateLabel(dateStr)} · ${doneCount}/4 tasks</div>
+    <div class="sheet-day-sub">${formatDateLabel(dateStr)} · ${doneCount}/5 tasks</div>
     ${rows}
   `;
+
+  document.querySelectorAll('.sheet-task-row[data-task]').forEach(row => {
+    row.addEventListener('click', () => toggleSheetTask(row.dataset.task));
+  });
 
   const overlay = document.getElementById('cal-overlay');
   const sheet   = document.getElementById('cal-sheet');
   overlay.classList.add('open');
   setTimeout(() => sheet.classList.add('open'), 10);
+}
+
+async function toggleSheetTask(taskKey) {
+  sheetData[taskKey] = !sheetData[taskKey];
+
+  const row = document.querySelector(`.sheet-task-row[data-task="${taskKey}"]`);
+  row.querySelector('.sheet-task-status').textContent = sheetData[taskKey] ? '✅' : '⬜';
+
+  const doneCount = Object.values(sheetData).filter(Boolean).length;
+  document.querySelector('.sheet-day-sub').textContent =
+    `${formatDateLabel(sheetDateStr)} · ${doneCount}/5 tasks`;
+
+  await saveDay(currentUserId, sheetDateStr, sheetData);
+
+  allDays[sheetDateStr] = { ...sheetData };
+  const cell = document.querySelector(`.cal-cell[data-date="${sheetDateStr}"]`);
+  if (cell) {
+    cell.classList.remove('done', 'partial');
+    if (doneCount === 5) cell.classList.add('done');
+    else if (doneCount > 0) cell.classList.add('partial');
+  }
 }
 
 function closeDaySheet() {
