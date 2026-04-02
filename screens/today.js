@@ -5,7 +5,7 @@ const TASKS = [
   { key: 'exercise', icon: '🏃', title: 'Exercise', sub: '45 minutes of activity' },
   { key: 'water',    icon: '💧', title: 'Water',    sub: 'Drink 3 liters today' },
   { key: 'reading',  icon: '📖', title: 'Read',     sub: '10 pages of anything' },
-  { key: 'diet',     icon: '🥗', title: 'Eat Well', sub: 'Balanced meals, max 3 drinks' },
+  { key: 'diet',     icon: '🥗', title: 'Eat Well', sub: 'Balanced meals, max 25g added sugar' },
   { key: 'sleep',   icon: '😴', title: 'Sleep',    sub: '8 hours of quality sleep' },
 ];
 
