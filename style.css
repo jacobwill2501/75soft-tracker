@@ -182,7 +182,7 @@ p  { font-size: 0.9375rem; color: var(--text-secondary); }
 }
 
 .nav-tab__label {
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 500;
 }
 
@@ -869,6 +869,66 @@ p  { font-size: 0.9375rem; color: var(--text-secondary); }
 .animate-in:nth-child(3) { animation-delay: 0.15s; }
 .animate-in:nth-child(4) { animation-delay: 0.20s; }
 .animate-in:nth-child(5) { animation-delay: 0.25s; }
+
+/* ============================================================
+   Nav state: pre-login shows Profiles + Family only
+   Depends on app.js toggling the nav--prelogin class on #bottom-nav
+   ============================================================ */
+
+.bottom-nav.nav--prelogin [data-tab="today"],
+.bottom-nav.nav--prelogin [data-tab="calendar"],
+.bottom-nav.nav--prelogin [data-tab="settings"] {
+  display: none;
+}
+
+.bottom-nav:not(.nav--prelogin) [data-tab="profiles"] {
+  display: none;
+}
+
+/* ============================================================
+   Family Hub
+   ============================================================ */
+
+.family-hub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.family-hub-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.family-hub-row:active { transform: scale(0.98); }
+
+.family-hub-row__emoji { font-size: 2rem; line-height: 1; }
+
+.family-hub-row__info { flex: 1; }
+
+.family-hub-row__name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.family-hub-row__day {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.family-hub-row__chevron {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+}
 
 /* ============================================================
    Responsive

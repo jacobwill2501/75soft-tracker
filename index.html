@@ -21,8 +21,12 @@
   <!-- App root -->
   <div id="app"></div>
 
-  <!-- Bottom navigation (hidden until logged in) -->
+  <!-- Bottom navigation -->
   <nav class="bottom-nav" id="bottom-nav" style="display:none;">
+    <button class="nav-tab" data-tab="profiles">
+      <div class="nav-tab__icon">👥</div>
+      <span class="nav-tab__label">Profiles</span>
+    </button>
     <button class="nav-tab active" data-tab="today">
       <div class="nav-tab__icon">☀️</div>
       <span class="nav-tab__label">Today</span>
@@ -30,6 +34,10 @@
     <button class="nav-tab" data-tab="calendar">
       <div class="nav-tab__icon">📅</div>
       <span class="nav-tab__label">Calendar</span>
+    </button>
+    <button class="nav-tab" data-tab="family">
+      <div class="nav-tab__icon">🏠</div>
+      <span class="nav-tab__label">Family</span>
     </button>
     <button class="nav-tab" data-tab="settings">
       <div class="nav-tab__icon">⚙️</div>

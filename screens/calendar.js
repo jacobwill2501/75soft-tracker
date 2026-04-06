@@ -15,19 +15,17 @@ let allDays       = {};
 let sheetData     = {};
 let sheetDateStr  = null;
 
-export async function renderCalendar(userId) {
+export async function renderCalendar(userId, { showTopBar = true } = {}) {
   currentUserId = userId;
   currentUser   = await getUser(userId);
   allDays       = await getAllDays(userId);
-  return buildHTML();
+  return buildHTML(showTopBar);
 }
 
-function buildHTML() {
+function buildHTML(showTopBar = true) {
   if (!currentUser.startDate) {
     return `
-      <div class="top-bar">
-        <div></div><span class="top-bar__title">Calendar</span><div></div>
-      </div>
+      ${showTopBar ? `<div class="top-bar"><div></div><span class="top-bar__title">Calendar</span><div></div></div>` : ''}
       <div class="page-content" style="text-align:center; padding-top:60px;">
         <div style="font-size:3rem; margin-bottom:16px;">📅</div>
         <h3 style="margin-bottom:8px;">No challenge started</h3>
@@ -61,11 +59,7 @@ function buildHTML() {
   }).join('');
 
   return `
-    <div class="top-bar">
-      <div></div>
-      <span class="top-bar__title">75 Days</span>
-      <div></div>
-    </div>
+    ${showTopBar ? `<div class="top-bar"><div></div><span class="top-bar__title">75 Days</span><div></div></div>` : ''}
     <div class="page-content">
       <!-- Legend -->
       <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
@@ -95,9 +89,9 @@ function buildHTML() {
   `;
 }
 
-export function initCalendar() {
+export function initCalendar(readOnly = false) {
   document.querySelectorAll('.cal-cell:not(.future)').forEach(cell => {
-    cell.addEventListener('click', () => openDaySheet(cell.dataset.day, cell.dataset.date));
+    cell.addEventListener('click', () => openDaySheet(cell.dataset.day, cell.dataset.date, readOnly));
   });
 
   document.getElementById('cal-overlay')?.addEventListener('click', e => {
@@ -105,14 +99,14 @@ export function initCalendar() {
   });
 }
 
-async function openDaySheet(dayNum, dateStr) {
+async function openDaySheet(dayNum, dateStr, readOnly = false) {
   const data = allDays[dateStr] || { exercise: false, water: false, reading: false, diet: false, sleep: false };
   sheetData    = { ...data };
   sheetDateStr = dateStr;
   const doneCount = Object.values(sheetData).filter(Boolean).length;
 
   const rows = TASKS.map(t => `
-    <div class="sheet-task-row" data-task="${t.key}" role="button" tabindex="0" style="cursor:pointer;">
+    <div class="sheet-task-row" data-task="${t.key}" ${readOnly ? '' : 'role="button" tabindex="0" style="cursor:pointer;"'}>
       <span class="sheet-task-icon">${t.icon}</span>
       <span class="sheet-task-name">${t.name}</span>
       <span class="sheet-task-status">${sheetData[t.key] ? '✅' : '⬜'}</span>
@@ -125,9 +119,11 @@ async function openDaySheet(dayNum, dateStr) {
     ${rows}
   `;
 
-  document.querySelectorAll('.sheet-task-row[data-task]').forEach(row => {
-    row.addEventListener('click', () => toggleSheetTask(row.dataset.task));
-  });
+  if (!readOnly) {
+    document.querySelectorAll('.sheet-task-row[data-task]').forEach(row => {
+      row.addEventListener('click', () => toggleSheetTask(row.dataset.task));
+    });
+  }
 
   const overlay = document.getElementById('cal-overlay');
   const sheet   = document.getElementById('cal-sheet');
